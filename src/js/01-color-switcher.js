@@ -23,5 +23,4 @@ function onStart() {
 function onStop() {
   start.disabled = false;
   clearInterval(timerId);
-//   document.body.style.backgroundColor = 'white';
 }
