@@ -2,8 +2,6 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-
-
 const counterDay = document.querySelector('[data-days]');
 const counterHour = document.querySelector('[data-hours]');
 const counterMinute = document.querySelector('[data-minutes]');
@@ -23,13 +21,14 @@ const options = {
     deadLine = selectedDates[0];
     if (deadLine <= options.defaultDate) {
       Notify.failure('Choose the date in the future');
-      counterStart.disabled = true;
     } else {
       counterStart.disabled = false;
     }
   },
 };
 let deadLine = 0;
+
+counterStart.disabled = true;
 
 Notify.info(`${currentDate}`);
 flatpickr('#datetime-picker', options);
@@ -51,15 +50,21 @@ function convertMs(ms) {
 }
 
 function startCounter() {
-  setInterval(() => {
+  const id = setInterval(() => {
     const now = new Date();
     const number = deadLine - now;
     const result = convertMs(number);
-
     counterDay.textContent = twoDigits(result.days);
     counterHour.textContent = twoDigits(result.hours);
     counterMinute.textContent = twoDigits(result.minutes);
     counterSecond.textContent = twoDigits(result.seconds);
+    if (number <= 0) {
+      counterDay.textContent = '00';
+      counterHour.textContent = '00';
+      counterMinute.textContent = '00';
+      counterSecond.textContent = '00';
+      clearInterval(id);
+    }
   }, 1000);
 }
 
@@ -69,18 +74,16 @@ function twoDigits(value) {
 
 counterFrame.style.display = 'flex';
 counterField.forEach(field => {
-    field.style.marginRight = '50px';
-    field.style.display = 'flex'
-    field.style.flexDirection = 'column'
-    field.style.justifyСontent = 'center'
-    field.style.alignItems = 'center';  
+  field.style.marginRight = '50px';
+  field.style.display = 'flex';
+  field.style.flexDirection = 'column';
+  field.style.justifyСontent = 'center';
+  field.style.alignItems = 'center';
 });
 counterValue.forEach(value => {
   value.style.fontSize = '100px';
-
-
 });
 counterLabel.forEach(label => {
-    label.style.fontSize = '20px'
-    label.style.fontWeight = '1px'
-})
+  label.style.fontSize = '20px';
+  label.style.fontWeight = '1px';
+});
