@@ -2,6 +2,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+const counterInput = document.querySelector('#datetime-picker');
 const counterDay = document.querySelector('[data-days]');
 const counterHour = document.querySelector('[data-hours]');
 const counterMinute = document.querySelector('[data-minutes]');
@@ -50,6 +51,7 @@ function convertMs(ms) {
 }
 
 function startCounter() {
+  counterInput.disabled = true;
   const id = setInterval(() => {
     const now = new Date();
     const number = deadLine - now;
@@ -63,6 +65,7 @@ function startCounter() {
       counterHour.textContent = '00';
       counterMinute.textContent = '00';
       counterSecond.textContent = '00';
+      counterInput.disabled = false;
       clearInterval(id);
     }
   }, 1000);
