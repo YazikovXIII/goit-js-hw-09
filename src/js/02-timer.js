@@ -51,6 +51,7 @@ function convertMs(ms) {
 }
 
 function startCounter() {
+  counterStart.disabled = true;
   counterInput.disabled = true;
   const id = setInterval(() => {
     const now = new Date();
@@ -66,6 +67,7 @@ function startCounter() {
       counterMinute.textContent = '00';
       counterSecond.textContent = '00';
       counterInput.disabled = false;
+      counterStart.disabled = false;
       clearInterval(id);
     }
   }, 1000);
